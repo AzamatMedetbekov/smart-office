@@ -11,7 +11,7 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-st.title("Object Detection and Tracking using YOLOv8")
+st.title("Object Detection and Tracking using YOLOv11")
 
 st.sidebar.header("ML Model Config")
 model_type = st.sidebar.radio("Select Task", ['Detection', 'Segmentation'])
@@ -35,10 +35,10 @@ if source_radio == settings.IMAGE:
         try:
             if source_img:
                 uploaded_image = PIL.Image.open(source_img)
-                st.image(source_img, caption="Uploaded Image", use_column_width=True)
+                st.image(source_img, caption="Uploaded Image", use_container_width=True)
             else:
                 default_image = PIL.Image.open(str(settings.DEFAULT_IMAGE))
-                st.image(default_image, caption="Default Image", use_column_width=True)
+                st.image(default_image, caption="Default Image", use_container_width=True)
         except Exception as ex:
             st.error("Error opening image")
             st.error(ex)
@@ -48,7 +48,7 @@ if source_radio == settings.IMAGE:
             res = model.predict(img, conf=confidence)
             boxes = res[0].boxes
             res_plotted = res[0].plot()[:, :, ::-1]
-            st.image(res_plotted, caption='Detected Image', use_column_width=True)
+            st.image(res_plotted, caption='Detected Image', use_container_width=True)
             with st.expander("Detection Results"):
                 for box in boxes:
                     st.write(box.data)

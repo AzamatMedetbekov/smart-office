@@ -21,7 +21,7 @@ def _display_detected_frames(conf, model, st_frame, image, is_display_tracking=F
     else:
         res = model.predict(image, conf=conf)
     res_plotted = res[0].plot()
-    st_frame.image(res_plotted, caption='Detected Video', channels="BGR", use_column_width=True)
+    st_frame.image(res_plotted, caption='Detected Video', channels="BGR", use_container_width=True)
 
 def get_youtube_stream_url(youtube_url):
     ydl_opts = {'format': 'best[ext=mp4]', 'no_warnings': True, 'quiet': True}
