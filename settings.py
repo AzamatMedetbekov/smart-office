@@ -9,13 +9,13 @@ if ROOT not in sys.path:
 
 ROOT = ROOT.relative_to(Path.cwd())
 
+# Supported input sources
 IMAGE = 'Image'
 VIDEO = 'Video'
 WEBCAM = 'Webcam'
-RTSP = 'RTSP'
-YOUTUBE = 'YouTube'
-SOURCES_LIST = [IMAGE, VIDEO, WEBCAM, RTSP, YOUTUBE]
+SOURCES_LIST = [IMAGE, VIDEO, WEBCAM]
 
+# Paths
 IMAGES_DIR = ROOT / 'images'
 VIDEO_DIR = ROOT / 'videos'
 MODEL_DIR = ROOT / 'weights'
@@ -29,8 +29,7 @@ VIDEOS_DICT = {
     'video_3': VIDEO_DIR / 'video_3.mp4',
 }
 
-DETECTION_MODEL = MODEL_DIR / 'Yolo-Weights\yolo11l.pt'        
-SEGMENTATION_MODEL = MODEL_DIR / 'yolov11n-seg.pt' 
-
+DETECTION_MODEL = MODEL_DIR / 'Yolo-Weights/yolo11l.pt'
+SEGMENTATION_MODEL = MODEL_DIR / 'yolov11n-seg.pt'
 
 WEBCAM_PATH = 0
