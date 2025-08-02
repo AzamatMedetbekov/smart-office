@@ -1,4 +1,3 @@
-# sahi_helper.py
 from sahi.predict import get_sliced_prediction
 from sahi.auto_model import AutoDetectionModel
 import cv2
@@ -50,7 +49,6 @@ def run_sahi_inference(
         overlap_width_ratio=overlap,
     )
 
-    # Draw bounding boxes manually
     image_with_boxes = draw_boxes(image.copy(), result.object_prediction_list)
     image_rgb = cv2.cvtColor(image_with_boxes, cv2.COLOR_BGR2RGB)
 
