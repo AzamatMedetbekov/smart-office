@@ -9,13 +9,11 @@ if ROOT not in sys.path:
 
 ROOT = ROOT.relative_to(Path.cwd())
 
-# Supported input sources
 IMAGE = 'Image'
 VIDEO = 'Video'
 WEBCAM = 'Webcam'
 SOURCES_LIST = [IMAGE, VIDEO, WEBCAM]
 
-# Paths
 IMAGES_DIR = ROOT / 'images'
 VIDEO_DIR = ROOT / 'videos'
 MODEL_DIR = ROOT / 'weights'
