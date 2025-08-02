@@ -1,26 +1,26 @@
-# 🖥️ Smart Office Detection: YOLOv11 + SAHI + Streamlit
+# Smart Office Detection: YOLOv11 + SAHI + Streamlit
 
 This project showcases a full **Smart Office object detection and segmentation** pipeline powered by **YOLOv11** and **Streamlit**, enhanced with **SAHI (Slicing Aided Hyper Inference)** for detecting small and overlapping objects. It provides a clean, interactive web UI for image inference tasks.
 
 ---
 
-## 🚀 Demo (Streamlit WebApp)
+## Demo (Streamlit WebApp)
 
 > ⚠️ Streamlit Cloud demo link coming soon. Locally, run the app using the instructions below.
 
 ---
 
-## 🎯 Features
+## Features
 
-* 🧠 **Object Detection** using YOLOv11 (custom fine-tuned weights)
-* 🎨 **Instance Segmentation** with YOLOv11L-seg model
-* 🧩 **SAHI** slicing support for better detection of small/overlapping objects
-* 🖼️ Upload and detect objects in images (videos and streams coming soon)
-* 📦 Clean, responsive UI with Streamlit
+* **Object Detection** using YOLOv11 (custom fine-tuned weights)
+* **Instance Segmentation** with YOLOv11L-seg model
+* **SAHI** slicing support for better detection of small/overlapping objects
+* Upload and detect objects in images (videos and streams coming soon)
+* Clean, responsive UI with Streamlit
 
 ---
 
-## 🧱 Project Structure
+## Project Structure
 
 ```
 smart-office/
@@ -40,7 +40,7 @@ smart-office/
 
 ---
 
-## ⚙️ Installation
+## Installation
 
 > Python 3.10+ is recommended
 
@@ -64,7 +64,7 @@ pip install streamlit opencv-python numpy matplotlib Pillow \
 
 ---
 
-## 📦 Model Weights
+## Model Weights
 
 Place your model weights in the `weights/` directory:
 
@@ -75,7 +75,7 @@ If you don’t have weights, train using the steps below or download YOLOv11 mod
 
 ---
 
-## 🖥️ Run the App
+## Run the App
 
 ```bash
 streamlit run app.py
@@ -83,19 +83,19 @@ streamlit run app.py
 
 ---
 
-## 🧠 Inference Workflow
+## Inference Workflow
 
-1. **Select Task**: Detection or Segmentation
-2. **Set Confidence** threshold (slider)
-3. **Toggle SAHI** for slicing inference
-4. **Upload Image** or use default sample
-5. **Click 'Detect Objects'** to see results
+1. Select Task: Detection or Segmentation
+2. Set Confidence threshold (slider)
+3. Toggle SAHI for slicing inference
+4. Upload Image or use default sample
+5. Click 'Detect Objects' to see results
 
-📌 *Only image input is supported in this version.*
+*Only image input is supported in this version.*
 
 ---
 
-## 🏋️ Training a Custom Model
+## Training a Custom Model
 
 We used the dataset [Office Object Detection Dataset](https://www.kaggle.com/datasets/walidguirat/office-object-detection) from Kaggle.
 
@@ -133,7 +133,7 @@ Make sure label files (`.txt`) have correct class indices (0 to 4).
 
 ---
 
-## 🧩 SAHI Inference (Post-training)
+## SAHI Inference (Post-training)
 
 ```python
 from sahi.auto_model import AutoDetectionModel
@@ -155,11 +155,11 @@ result = get_sliced_prediction(
 )
 ```
 
-📌 SAHI is used after model training to improve detection of small/overlapping objects.
+*SAHI is used after model training to improve detection of small/overlapping objects.*
 
 ---
 
-## 🖼️ Screenshots
+## Screenshots
 
 | Upload | Detection | SAHI |
 | ------ | --------- | ---- |
@@ -167,13 +167,13 @@ result = get_sliced_prediction(
 
 ---
 
-## 📄 Evaluation Script
+## Evaluation Script
 
 Evaluation will be added after training completes. It will be used to assess mAP and accuracy metrics.
 
 ---
 
-## 📋 requirements.txt
+## requirements.txt
 
 See the provided file. Main packages include:
 
@@ -184,7 +184,7 @@ See the provided file. Main packages include:
 
 ---
 
-## 🧠 Tech Stack
+## Tech Stack
 
 * **YOLOv11** by Ultralytics for object detection/segmentation
 * **Streamlit** for front-end visualization
@@ -193,8 +193,12 @@ See the provided file. Main packages include:
 
 ---
 
-## 📝 Notes
+## Notes
 
 * Kaggle Notebooks will stop training when tab/browser closes unless GPU is persistent
 * SAHI helps when objects are small, dense, or overlapping
 * Segmentation model used: `yolov11l-seg.pt`
+
+---
+
+If you found this helpful, please ⭐️ the repo and share!
