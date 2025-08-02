@@ -3,6 +3,7 @@ import PIL
 import streamlit as st
 import settings
 import helper
+from sahi_helper import run_sahi_inference
 
 st.set_page_config(
     page_title="Smart Office Detection",
@@ -31,6 +32,7 @@ model = helper.load_model(model_path)
 st.sidebar.markdown("---")
 st.sidebar.markdown("### 🎥 Input Source")
 source_radio = st.sidebar.radio("Select Source", settings.SOURCES_LIST)
+use_sahi = st.sidebar.checkbox("🧩 Use SAHI slicing", value=False)
 
 if source_radio == settings.IMAGE:
     source_img = st.sidebar.file_uploader("Upload an image", type=["jpg", "jpeg", "png", 'bmp', 'webp'])
@@ -38,20 +40,33 @@ if source_radio == settings.IMAGE:
     with col1:
         if source_img:
             uploaded_image = PIL.Image.open(source_img)
+            uploaded_image.convert("RGB").save("temp.jpg")
             st.image(source_img, caption="Uploaded Image", use_container_width=True)
         else:
             default_image = PIL.Image.open(settings.DEFAULT_IMAGE)
+            default_image.convert("RGB").save("temp.jpg")
             st.image(default_image, caption="Default Image", use_container_width=True)
     with col2:
         if st.sidebar.button("🚀 Detect Objects"):
-            img = uploaded_image if source_img else default_image
-            res = model.predict(img, conf=confidence)
-            boxes = res[0].boxes
-            res_plotted = res[0].plot()[:, :, ::-1]
-            st.image(res_plotted, caption='Detected Image', use_container_width=True)
-            with st.expander("🔍 Detection Results"):
-                for box in boxes:
-                    st.write(box.data)
+            if use_sahi:
+                sahi_img, result = run_sahi_inference("temp.jpg", str(model_path), conf=confidence)
+                st.image(sahi_img, caption="SAHI Sliced Result", channels="BGR", use_container_width=True)
+                with st.expander("🔍 Detection Results"):
+                    for pred in result.object_prediction_list:
+                        st.write({
+                            "label": pred.category.name,
+                            "confidence": round(pred.score.value, 3),
+                            "bbox": pred.bbox.to_xywh()
+                        })
+            else:
+                img = uploaded_image if source_img else default_image
+                res = model.predict(img, conf=confidence)
+                boxes = res[0].boxes
+                res_plotted = res[0].plot()[:, :, ::-1]
+                st.image(res_plotted, caption='Detected Image', use_container_width=True)
+                with st.expander("🔍 Detection Results"):
+                    for box in boxes:
+                        st.write(box.data)
 
 elif source_radio == settings.VIDEO:
     helper.play_stored_video(confidence, model)

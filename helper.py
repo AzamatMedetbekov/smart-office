@@ -46,3 +46,4 @@ def play_webcam(conf, model):
                 break
             _display_detected_frames(conf, model, st_frame, image, is_display_tracker, tracker)
         vid_cap.release()
+
