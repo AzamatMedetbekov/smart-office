@@ -4,7 +4,7 @@ import cv2
 import numpy as np
 import torch
 import logging
-from typing import Tuple, Optional
+from typing import Tuple, Optional, List
 
 logger = logging.getLogger(__name__)
 
@@ -65,13 +65,30 @@ def get_or_load_model(model_path: str, conf: float = 0.3) -> Optional[AutoDetect
         return None
 
 def run_sahi_inference(
-    image: np.ndarray,
+    image,
     model_path: str,
     conf: float = 0.3,
-    slice_size: int = 512,
+    slice_size: int = 256,
     overlap: float = 0.2,
+    filter_classes: Optional[List[str]] = None,
 ) -> Tuple[Optional[np.ndarray], Optional[object]]:
-    """Run SAHI inference with comprehensive error handling."""
+    """Run SAHI inference with comprehensive error handling and class filtering.
+    
+    Args:
+        image: Input image as numpy array or path string
+        model_path: Path to the model
+        conf: Confidence threshold
+        slice_size: Size of slices for inference
+        overlap: Overlap ratio between slices
+        filter_classes: List of class names to filter predictions
+    """
+    
+    if isinstance(image, str):
+        try:
+            image = cv2.imread(image)
+        except Exception as e:
+            logger.error(f"Failed to load image from path {image}: {e}")
+            return None, None
     
     if image is None or image.size == 0:
         logger.error("Invalid input image")
@@ -107,7 +124,12 @@ def run_sahi_inference(
             else:
                 raise
 
-        image_with_boxes = draw_boxes(image.copy(), result.object_prediction_list)
+        preds = result.object_prediction_list
+        if filter_classes is not None:
+            preds = [p for p in preds if p.category.name in filter_classes]
+            logger.info(f"Filtered predictions from {len(result.object_prediction_list)} to {len(preds)} using classes: {filter_classes}")
+
+        image_with_boxes = draw_boxes(image.copy(), preds)
         image_rgb = cv2.cvtColor(image_with_boxes, cv2.COLOR_BGR2RGB)
 
         return image_rgb, result
