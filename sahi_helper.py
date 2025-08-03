@@ -68,7 +68,7 @@ def run_sahi_inference(
     image: np.ndarray,
     model_path: str,
     conf: float = 0.3,
-    slice_size: int = 256,
+    slice_size: int = 512,
     overlap: float = 0.2,
 ) -> Tuple[Optional[np.ndarray], Optional[object]]:
     """Run SAHI inference with comprehensive error handling."""

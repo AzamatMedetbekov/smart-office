@@ -2,7 +2,6 @@ import zipfile, shutil, yaml, logging
 from pathlib import Path
 from sklearn.model_selection import train_test_split
 
-# Setup logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
@@ -22,7 +21,6 @@ DATASET_ZIP_DIR = Path("datasets/raw_zips")
 OUTPUT_DIR = Path("datasets/smart_office")
 IMAGE_EXTS = [".jpg", ".jpeg", ".png", ".webp"]
 
-# Create directories with error handling
 try:
     (OUTPUT_DIR / "images/train").mkdir(parents=True, exist_ok=True)
     (OUTPUT_DIR / "images/val").mkdir(parents=True, exist_ok=True)
@@ -50,7 +48,7 @@ def extract_all_zips():
 def load_class_names(yaml_path):
     try:
         with open(yaml_path, "r") as f:
-            data = yaml.safe_load(f)  # FIXED: Replace dangerous eval() with safe_load
+            data = yaml.safe_load(f)  
             return data.get('names', [])
     except (yaml.YAMLError, Exception) as e:
         logger.error(f"Failed to load YAML {yaml_path}: {e}")
@@ -69,7 +67,7 @@ def copy_and_filter_labels_and_images(src_img_dir, src_lbl_dir, class_map):
             filtered_lines = []
             for line in lines:
                 parts = line.strip().split()
-                if len(parts) < 5:  # Basic validation
+                if len(parts) < 5:  
                     continue
                 cid = int(parts[0])
                 coords = parts[1:]
@@ -114,7 +112,7 @@ def split_train_val():
         
         for img in val_imgs:
             lbl = OUTPUT_DIR / "labels/train" / (img.stem + ".txt")
-            if lbl.exists():  # Check if label exists
+            if lbl.exists():  
                 shutil.move(img, OUTPUT_DIR / "images/val" / img.name)
                 shutil.move(lbl, OUTPUT_DIR / "labels/val" / lbl.name)
         

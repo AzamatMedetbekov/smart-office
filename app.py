@@ -7,7 +7,6 @@ from sahi_helper import run_sahi_inference
 import numpy as np
 import logging
 
-# Setup logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
@@ -58,7 +57,6 @@ model_type = st.sidebar.radio("Select Task", ["Detection", "Segmentation"])
 confidence = float(st.sidebar.slider("Model Confidence", 25, 100, 40)) / 100
 use_sahi = st.sidebar.checkbox("🧩 Use SAHI Slicing", value=False)
 
-# Load model with error handling
 try:
     model_path = (
         settings.DETECTION_MODEL
@@ -83,7 +81,6 @@ st.markdown(
     "Use your custom YOLOv11 or SAHI-enhanced object detector on uploaded images."
 )
 
-# Handle different source types
 if source_radio == settings.IMAGE:
     source_img = st.sidebar.file_uploader(
         "Upload an image", type=["jpg", "jpeg", "png", "bmp", "webp"]
@@ -98,7 +95,6 @@ if source_radio == settings.IMAGE:
                 image_np = np.array(uploaded_image)
                 st.image(uploaded_image, caption="Uploaded Image", use_container_width=True)
             else:
-                # Handle default image with error checking
                 if hasattr(settings, 'DEFAULT_IMAGE') and Path(settings.DEFAULT_IMAGE).exists():
                     default_image = PIL.Image.open(settings.DEFAULT_IMAGE).convert("RGB")
                     image_np = np.array(default_image)
@@ -171,6 +167,5 @@ if source_radio == settings.IMAGE:
                     st.error(f"❌ Detection failed: {e}")
 
 else:
-    # Handle all non-image sources (video, webcam, etc.)
     st.warning("🚧 Currently, only image detection is supported in this demo UI.")
     st.info("💡 Video and webcam support will be added in future updates.")

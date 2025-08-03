@@ -142,39 +142,8 @@ Make sure label files (`.txt`) have correct class indices.
 
 To enhance detection of **small, overlapping, or dense objects**, this project uses a custom `run_sahi_inference`.
 
-### 🔧 Definition
+### 🔧 Check sahi_helper.py for detailed overview
 
-```python
-def run_sahi_inference(
-    img_path,
-    model_path,
-    conf=0.3,
-    slice_size=256,
-    overlap=0.2,
-):
-    detection_model = AutoDetectionModel.from_pretrained(
-        model_type="ultralytics",
-        model_path=model_path,
-        confidence_threshold=conf,
-        image_size=640,
-        device="cuda:0" if torch.cuda.is_available() else "cpu",
-    )
-
-    image = cv2.imread(img_path)
-    result = get_sliced_prediction(
-        image=image,
-        detection_model=detection_model,
-        slice_height=slice_size,
-        slice_width=slice_size,
-        overlap_height_ratio=overlap,
-        overlap_width_ratio=overlap,
-    )
-
-    image_with_boxes = draw_boxes(image.copy(), result.object_prediction_list)
-    image_rgb = cv2.cvtColor(image_with_boxes, cv2.COLOR_BGR2RGB)
-
-    return image_rgb, result
-```
 *SAHI is used after model training to improve detection of small/overlapping objects.*
 
 ---
