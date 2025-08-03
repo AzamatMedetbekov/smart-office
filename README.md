@@ -24,17 +24,17 @@ This project showcases a full **Smart Office object detection and segmentation**
 
 ```
 smart-office/
-├── app.py                  # Streamlit app
-├── helper.py              # Helper methods for webcam/video/image inference
-├── sahi_helper.py         # SAHI integration
-├── settings.py            # Path config
+├── app.py # Streamlit app
+├── helper.py # Helper methods for image inference
+├── sahi_helper.py # SAHI integration
+├── settings.py # Path config
 ├── weights/
-│   ├── yolo11l.pt         # Detection model
-│   └── yolov11l-seg.pt    # Segmentation model
+│ ├── yolo11l.pt # Detection model
+│ └── yolov11l-seg.pt # Segmentation model
 ├── images/
-│   └── office_4.jpg       # Default image
-├── videos/                # Video samples
-├── requirements.txt       # Dependencies
+│ └── office_4.jpg # Default image
+├── videos/ # Video samples
+├── requirements.txt # Dependencies
 └── cv-project-training.ipynb # Training notebook
 ```
 
@@ -46,8 +46,8 @@ smart-office/
 
 ```bash
 # Clone this repository
-git clone https://github.com/your-username/smart-office-detection.git
-cd smart-office-detection
+git clone https://github.com/AzamatMedetbekov/smart-office.git
+cd smart-office
 
 # Install dependencies
 pip install -r requirements.txt
@@ -99,62 +99,82 @@ streamlit run app.py
 
 We used the dataset [Office Object Detection Dataset](https://www.kaggle.com/datasets/walidguirat/office-object-detection) from Kaggle.
 
-Training was done using YOLOv11L model on this dataset. Refer to the provided notebook `cv-project-training.ipynb` for full training configuration.
+Training was done using YOLOv11L model on this dataset. We used Google Colab with a NVIDIA A100 GPU for training. Refer to the provided notebook cv-project-training.ipynb for full training configuration.
 
 Example training:
 
 ```python
 from ultralytics import YOLO
-model = YOLO("yolo11l.pt")
+
+model = YOLO('/content/yolo11l.pt')  
 
 model.train(
-    data="data.yaml",
-    epochs=50,
-    imgsz=640,
-    batch=8,
-    cache=True,
-    amp=True,
-    project="runs/office",
-    name="yolov11l_office"
+  data   = '/content/data/dataset.yaml',
+  epochs = 20,
+  imgsz  = 640,
+  batch  = 16,
+  workers= 4,
+  project= 'runs/train',
+  name   = 'office_yolov11'
 )
 ```
 
 Minimal `data.yaml`:
 
 ```yaml
-train: data/images/train
-val: data/images/val
-
-nc: 5
-names: [chair, dining table, keyboard, laptop, person]
+train: images/train
+val: images/val
+nc: 6
+names:
+- Background
+- chair
+- dining table
+- keyboard
+- laptop
+- person
 ```
 
-Make sure label files (`.txt`) have correct class indices (0 to 4).
+Make sure label files (`.txt`) have correct class indices.
 
 ---
 
 ## SAHI Inference (Post-training)
 
+To enhance detection of **small, overlapping, or dense objects**, this project uses a custom `run_sahi_inference`.
+
+### 🔧 Definition
+
 ```python
-from sahi.auto_model import AutoDetectionModel
-from sahi.predict import get_sliced_prediction
+def run_sahi_inference(
+    img_path,
+    model_path,
+    conf=0.3,
+    slice_size=256,
+    overlap=0.2,
+):
+    detection_model = AutoDetectionModel.from_pretrained(
+        model_type="ultralytics",
+        model_path=model_path,
+        confidence_threshold=conf,
+        image_size=640,
+        device="cuda:0" if torch.cuda.is_available() else "cpu",
+    )
 
-model = AutoDetectionModel.from_pretrained(
-    model_type="ultralytics",
-    model_path="runs/office/yolov11l_office/weights/best.pt",
-    confidence_threshold=0.3,
-)
+    image = cv2.imread(img_path)
+    result = get_sliced_prediction(
+        image=image,
+        detection_model=detection_model,
+        slice_height=slice_size,
+        slice_width=slice_size,
+        overlap_height_ratio=overlap,
+        overlap_width_ratio=overlap,
+    )
 
-result = get_sliced_prediction(
-    image="your_image.jpg",
-    detection_model=model,
-    slice_height=512,
-    slice_width=512,
-    overlap_height_ratio=0.2,
-    overlap_width_ratio=0.2,
-)
+    image_with_boxes = draw_boxes(image.copy(), result.object_prediction_list)
+    image_rgb = cv2.cvtColor(image_with_boxes, cv2.COLOR_BGR2RGB)
+
+    return image_rgb, result
 ```
-
 *SAHI is used after model training to improve detection of small/overlapping objects.*
 
 ---
@@ -189,7 +209,7 @@ See the provided file. Main packages include:
 * **YOLOv11** by Ultralytics for object detection/segmentation
 * **Streamlit** for front-end visualization
 * **SAHI** for improved slicing-based inference
-* **Kaggle Notebooks** for training
+* **Kaggle Notebooks** dataset + **Google Colab** for model training 
 
 ---
 

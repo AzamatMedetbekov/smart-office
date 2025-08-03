@@ -25,7 +25,7 @@ VIDEOS_DICT = {
     "Office Footage 3": VIDEO_DIR / "video_3.mp4",
 }
 
-DETECTION_MODEL = MODEL_DIR / "Yolo-Weights" / "yolo11l.pt"
-SEGMENTATION_MODEL = MODEL_DIR / "Yolo-Weights" / "yolo11l-seg.pt"
+DETECTION_MODEL = MODEL_DIR / "yolo11l.pt"
+SEGMENTATION_MODEL = MODEL_DIR / "yolo11l-seg.pt"
 
 WEBCAM_PATH = 0  
