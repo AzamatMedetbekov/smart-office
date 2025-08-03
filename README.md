@@ -32,11 +32,15 @@ smart-office/
 │ └──config.toml
 ├── weights/
 │ ├── yolo11l.pt 
+│ ├── best.pt
 │ └── yolov11l-seg.pt 
 ├── images/
+│ ├── temp - yolo11l.jpg 
+│ ├── temp - sahi.jpg
 │ └── temp.jpg 
 ├── requirements.txt 
-└── cv-project-training.ipynb 
+├── notebook
+│ └── cv-project-training.ipynb 
 ```
 ---
 
