@@ -27,9 +27,12 @@ smart-office/
 ├── app.py 
 ├── helper.py 
 ├── sahi_helper.py 
+├── evaluate.py
 ├── settings.py 
+├── datasets
+│ └──*your dataset*
 ├──.streamlit
-│ └──config.toml
+│ └── config.toml
 ├── weights/
 │ ├── yolo11l.pt 
 │ ├── best.pt
