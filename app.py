@@ -89,6 +89,7 @@ try:
         "tv",
         "person",
         "chair",
+        "keyboard",
     ]
 
     available = [c for c in all_classes if c in DESIRED]

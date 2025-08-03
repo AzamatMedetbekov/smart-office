@@ -150,15 +150,18 @@ To enhance detection of **small, overlapping, or dense objects**, this project u
 
 ## Screenshots
 
-| Upload | Detection | SAHI |
-| ------ | --------- | ---- |
-|        |           |      |
-
----
-
-## Evaluation Script
-
-Evaluation will be added after training completes. It will be used to assess mAP and accuracy metrics.
+<table>
+  <tr>
+    <th>Uploaded Image</th>
+    <th>YOLOv11 Detection</th>
+    <th>YOLOv11 + SAHI Detection</th>
+  </tr>
+  <tr>
+    <td><img src="images/temp.jpg" width="250"></td>
+    <td><img src="images/temp - yolo11l.jpg" width="250"></td>
+    <td><img src="images/temp - sahi.jpg" width="250"></td>
+  </tr>
+</table>
 
 ---
 
