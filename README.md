@@ -6,7 +6,7 @@ This project showcases a full **Smart Office object detection and segmentation**
 
 ## Demo (Streamlit WebApp)
 
-> ⚠️ Streamlit Cloud demo link coming soon. Locally, run the app using the instructions below.
+> https://smart-office-7suihd3crxrojtd6eisjkg.streamlit.app/ 
 
 ---
 
