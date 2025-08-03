@@ -24,20 +24,20 @@ This project showcases a full **Smart Office object detection and segmentation**
 
 ```
 smart-office/
-├── app.py # Streamlit app
-├── helper.py # Helper methods for image inference
-├── sahi_helper.py # SAHI integration
-├── settings.py # Path config
+├── app.py 
+├── helper.py 
+├── sahi_helper.py 
+├── settings.py 
+├──.streamlit
+│ └──config.toml
 ├── weights/
-│ ├── yolo11l.pt # Detection model
-│ └── yolov11l-seg.pt # Segmentation model
+│ ├── yolo11l.pt 
+│ └── yolov11l-seg.pt 
 ├── images/
-│ └── office_4.jpg # Default image
-├── videos/ # Video samples
-├── requirements.txt # Dependencies
-└── cv-project-training.ipynb # Training notebook
+│ └── temp.jpg 
+├── requirements.txt 
+└── cv-project-training.ipynb 
 ```
-
 ---
 
 ## Installation
@@ -218,7 +218,3 @@ See the provided file. Main packages include:
 * Kaggle Notebooks will stop training when tab/browser closes unless GPU is persistent
 * SAHI helps when objects are small, dense, or overlapping
 * Segmentation model used: `yolov11l-seg.pt`
-
----
-
-If you found this helpful, please ⭐️ the repo and share!

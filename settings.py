@@ -7,7 +7,7 @@ if ROOT not in sys.path:
     sys.path.append(str(ROOT))
 ROOT = ROOT.relative_to(Path.cwd())
 
-IMAGE = "Image"
+IMAGE = "images"
 VIDEO = "Video"
 WEBCAM = "Webcam"
 SOURCES_LIST = [IMAGE, VIDEO, WEBCAM]
@@ -16,8 +16,8 @@ IMAGES_DIR = ROOT / "images"
 VIDEO_DIR = ROOT / "videos"
 MODEL_DIR = ROOT / "weights"
 
-DEFAULT_IMAGE = "maxresdefault.jpg"
-DEFAULT_DETECT_IMAGE = IMAGES_DIR / "office_4_detected.jpg"
+DEFAULT_IMAGE = IMAGES_DIR / "temp.jpg"
+DEFAULT_DETECT_IMAGE = IMAGES_DIR / "temp.jpg"
 
 VIDEOS_DICT = {
     "Office Footage 1": VIDEO_DIR / "video_1.mp4",
