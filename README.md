@@ -4,10 +4,10 @@ This project showcases a full **Smart Office object detection and segmentation**
 
 ---
 
-## Demo (Streamlit WebApp)
+## Demos (Streamlit WebApp + Video)
 
-> https://smart-office-7suihd3crxrojtd6eisjkg.streamlit.app/ 
-
+- https://smart-office-7suihd3crxrojtd6eisjkg.streamlit.app/ 
+- [Video demo](https://drive.google.com/file/d/1tRqNtZA9vU1ogsoy8C0EJIOpcJyuZrie/view?usp=drive_link)
 ---
 
 ## Features
